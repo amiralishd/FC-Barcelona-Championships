@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
-<script src="https://d3js.org/d3.v4.js">  
-</script>
+    
+<script src="https://d3js.org/d3.v4.js"></script>
     
 <style>
+    
 body {
     background-color: white;
     font: 14px sans-serif;
 }
-  
+    
 .chart { fill: #004d98 }
+    
 .chart:hover {fill: #a50044;}
-  
+    
 .axis {
 	font: 12px sans-serif;
 }
-  
+    
 .toolTip {
     position: absolute;
     display: none;
@@ -28,7 +30,7 @@ body {
     text-align: center;
     font: 12px sans-serif;
 }
-  
+    
 #whatyear {
   background-color: #edbb00;
     border-style: solid;
@@ -38,17 +40,17 @@ body {
   text-decoration: none;
   border: none;
 }
-  
+    
 #annotation {
   background-color: #edbb00;
-    border-style: solid;
-    border-width: 5px;
+  border-style: solid;
+  border-width: 5px;
   color: #fff;
   font: 13px sans-serif;
   text-decoration: none;
   border: none;
 }
-  
+    
 #button {
   background-color: #edbb00;
   padding: .7em;
@@ -58,73 +60,85 @@ body {
   text-decoration: none;
   border: none;
 }
-  
+    
 #button:hover {
   color: white;
   border: none;
   background: #A50044;
 }
-  
+    
+#button:focus {
+  color: white;
+  border: none;
+  background: #A50044;
+}
+    
 #barChart{
     pointer-events: all;        
 }
-  
+    
 #scrollbar{
     float: right
 }
-  
+    
 #fcbimage{
     display: none
 }
-  
+    
 #desc{
     margin-left: 40px;
     margin-top: 20px;  
 }
-  
+    
+h1{
+    color: #a50044;
+    ;
+}
+    
 </style>
 
-  
-  
-<h1> Glorious Years of F.C. Barcelona </h1>
+    
+    
+<h1 id='header' color = #FFD700> Glorious Years of F.C. Barcelona</h1>
+
 <body>
     
 <div id="pageselect">
     <button id="button" onclick="hideChart()"> About this visualization </button>
-    <button id="button" value=1952 onclick="showChart(this)"> 1 </button>
-    <button id="button" value=1992 onclick="showChart(this)"> 2 </button>
-    <button id="button" value=1997 onclick="showChart(this)"> 3 </button>
-    <button id="button" value=2009 onclick="showChart(this)"> 4 </button>
-    <button id="button" value=2011 onclick="showChart(this)"> 5 </button>
-    <button id="button" value=2015 onclick="showChart(this)"> 6 </button>
-    <button id="button" value=2018 onclick="showChart(this)"> 7 </button>
+    <button id="button" value=1952 onclick="showChart(this)"> 1951-52 </button>
+    <button id="button" value=1992 onclick="showChart(this)"> 1991-92 </button>
+    <button id="button" value=1997 onclick="showChart(this)"> 1996-97 </button>
+    <button id="button" value=2009 onclick="showChart(this)"> 2008-09 </button>
+    <button id="button" value=2011 onclick="showChart(this)"> 2010-11 </button>
+    <button id="button" value=2015 onclick="showChart(this)"> 2014-15 </button>
+    <button id="button" value=2018 onclick="showChart(this)"> Now </button>
+</div>
+    
+<div id="scrollbar">
+    <input type="range" min=1900 max=2018 step=1 id="year" width=400 value=2014 oninput="num.value = year.value">
+    <output name="num" id="num">2014</output>
 </div>
     
 <p><span id="aboutThisViz"></span></p>
-  
-<svg width="1420" height="350" id="barChart">
-    <g></g>      // changed as instructed
-    <rect width="100" height="43" x=50.15% y=9% fill=#edbb00 rx="15" ry="15"></rect>
-    <text id="whatyear" x=53.95% y=15% font-family="sans-serif" font-size="18px" fill=black text-anchor="middle" alignment-baseline="central"></text>
-    <image id="annotation" xlink:href="https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCB_logo.png" x=50% y=50% height="40px" width="40px">
+    
+<svg width="1390" height="350" id="barChart">
+    <g></g> 
+    <rect width="107.3" height="43" x=48.15% y=9% fill=#edbb00 rx="15" ry="15"></rect>
+    <text id="whatyear" x=51.95% y=15% font-family="sans-serif" font-size="18px" fill=black text-anchor="middle" alignment-baseline="central"></text>
+    <image id="annotation" xlink:href="https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCB_logo.png" x=606 y=-100 height="40px" width="40px">
     </image>
 </svg>
-  
+    
 <div id="desc">
     <img id="fcbimage" src="" alt="FCB" style="float:left;width:300px;height:auto;">  
     <p><span id="description"></span></p>
 </div>
-    
-    
-    
-    
-    
-    
+
     
     
 <script>  
-
 // document.getElementById("barChart").addEventListener("mouseclick", showChart, false);
+    
 document.getElementById("barChart").style.display = "none";
 document.getElementById("description").style.display = "none";
 document.getElementById("aboutThisViz").style.display = "block";
@@ -144,10 +158,32 @@ function showChart(num) {
     document.getElementById("fcbimage").style.display = "block";
     document.getElementById("description").innerHTML = num.value;
     document.getElementById("description").value = num.value;
+    
     tmp = num.value + "<br>"
     tmp = num.value-1 + "-" + tmp.substring(2)
     document.getElementById("whatyear").innerHTML = tmp;
+    // console.log(document.getElementById("whatyear").getAttribute("x"));
+    
 
+    
+  //  if (num.value = 1952){
+//        document.getElementById("annotation").innerHTML = "Hey to!";
+  //      document.getElementById("annotation").setAttribute("x", "50%");
+//        document.getElementById("annotation").setAttribute("y", "50%");
+  //      document.getElementById("annotation").style.display = "inline-block";
+//    }
+        //document.getElementById("annotation").style.display = "none";
+    
+    // "https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/data/FCBarcelona_championship_records.csv"
+    
+//    if (num.value == 1952){csv_add = "FCBarcelona_championship_records_1.csv"}
+//    else if (num.value == 1992){csv_add = "FCBarcelona_championship_records_2.csv"}
+//    else if (num.value == 1997){csv_add = "FCBarcelona_championship_records_3.csv"}
+//    else if (num.value == 2009){csv_add = "FCBarcelona_championship_records_4.csv"}
+//    else if (num.value == 2011){csv_add = "FCBarcelona_championship_records_5.csv"}
+//    else if (num.value == 2015){csv_add = "FCBarcelona_championship_records_6.csv"}
+//    else {csv_add = "FCBarcelona_championship_records.csv"}
+    
     csv_add = "https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/data/FCBarcelona_championship_records.csv"
     d3.csv(csv_add, function(d) {
         d.Catalan_Cup = +d["Catalan Cup"];
@@ -169,28 +205,72 @@ function showChart(num) {
         d.Total = +d["Total"];
         d.UEFA_Super_Cup = +d["UEFA Super Cup"];
         d.Year = +d["Year"];
+        //console.log(d);
         return d;
     }, function(error, data) {
         if (error) throw error;
     
         var svg = d3.select("svg"),
-        margin = {top: 60, right: 40, bottom: 40, left: 40},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom;
+            margin = {top: 60, right: 40, bottom: 40, left: 40},
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
 
         var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
         var x = d3.scaleLinear().domain([1900,2020]).rangeRound([0, width]),
-        y = d3.scaleLinear().domain([0,6]).rangeRound([height, 0]);
+            y = d3.scaleLinear().domain([0,6]).rangeRound([height, 0]);
 
         var g = svg.select("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+        var rechighlight = d3.select()
+        
+        if (num.value <= 1997){loc_logo = 100}
+            else if (num.value <= 2011){loc_logo = 60}
+            else if (num.value <= 2015){loc_logo = 18}
+            else {loc_logo = 184};
+        //document.getElementById("annotation").setAttribute("x", x(num.value)+25)
+        //document.getElementById("annotation").setAttribute("y", loc_logo)
+        var annotation = d3.select("svg").select("image")
+            .transition().duration(1000).attr("x", x(num.value)+25)
+            .attr("y", loc_logo)    
+            //console.log(x(num.value)+25)
+        
+        
+    //   if (num.value == 1952){img_add = ""}
+    //        else if (num.value == 1992){img_add = "FCBarcelona1952.png"}
+    //        else if (num.value == 1997){img_add = ""}
+    //        else if (num.value == 2009){img_add = ""}
+    //        else if (num.value == 2011){img_add = ""}
+    //        else if (num.value == 2015){img_add = ""}
+    //        else if (num.value == 2018){img_add = ""}
+    //        else {loc_logo = 184};
+        img_add = 'https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCBarcelona' + num.value + '.png'
+        document.getElementById("fcbimage").setAttribute("src", img_add)
+        //var teampic = d3.select("img")
+        //    .attr("src", img_add)
+        //    .attr("width", 0)
+        //    .transition().duration(1000)
+        //    .attr("width", 300)
+        
+        //g.append("text")
+        //    .attr("font-family", "sans-serif")
+        //    .attr("font-size", "14px")
+        //    .attr("y", 5)
+        //    ç
+        //    .text("salam")
+        
+        //g.append("line")
+        //    .attr("y1", 0.5)
+        //    .attr("x1", 0.5)
+        //    .attr("y2", 3)
+        //    .attr("x2", 3)
+        //    .attr("stroke", "red")
 
         g.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + (height + 0) + ")")
             .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
-      
         g.append("text")             
             .attr("transform", "translate(" + (0.99*width) + " ," + (height + margin.top + 15) + ")")
             .attr("font-family", "sans-serif")
@@ -202,7 +282,6 @@ function showChart(num) {
             .attr("class", "axis axis--y")
             .call(d3.axisLeft(y).ticks(6));
         g.append("text")
-      
             .attr("transform", "rotate(-90)")
             .attr("font-family", "sans-serif")
             .attr("font-size", "14px")
@@ -214,37 +293,45 @@ function showChart(num) {
         
         g.selectAll(".chart")
             .data(data.slice(0,num.value-1899))
+            //.exit().remove()
             .enter().append("rect")
             .attr("class", "chart")
-            .on("mousemove", function(d){
-                tooltip.style("left", d3.event.pageX + 10 + "px")
+            .on("mousemove", function(d){tooltip.style("left", d3.event.pageX + 10 + "px")
                 .style("top", d3.event.pageY + 10 + "px")
                 .html(tooltipcontent(d))
                 .style("fill", "#a50044")
                 .style("display", "block")
+                //d3.select(this)
+                //.transition()
+                //.duration(100)
                 })
-                .on("mouseout", function(d){ tooltip.style("display", "none")
+            .on("mouseout", function(d){tooltip.style("display", "none")
+                //d3.select(this)
+                //.transition()
+                //.duration(100)
                 ;})
+            //.on("mouseclick", function(d){annotation.attr("width", 0)
+            //    .transition().duration(1000)
+            //    .attr("width", 40)
+            //    ;})
             .attr("x", function(d) { return x(d.Year); })
             .attr("y", function(d) { return y(0); })
             .transition().duration(1000)
             .attr("y", function(d) { return y(d.Total); })
             .attr("height", function(d) { return height - y(d.Total); })
-            .attr("width", 9)
-	    
+            .attr("width", 9) //x.bandwidth()
+        
+        //console.log(d3.min(data, function(d) {return d.Year}))
+        //console.log(d3.max(data, function(d) {return d.Year}))
+        
+        //
+        
         g.selectAll(".chart")
             .data(data.slice(0,num.value-1899))
-	    .exit().remove()
+            .exit()
+            .transition().duration(1000).attr("y", function(d) { return y(0); }).attr("height", function(d) { return 0; })
+            .remove()
         
-      if (num.value <= 1997){loc_logo = 100}
-          else if (num.value <= 2011){loc_logo = 60}
-          else if (num.value <= 2015){loc_logo = 18}
-          else {loc_logo = 184};
-      document.getElementById("annotation").setAttribute("x", x(num.value)+25)
-      document.getElementById("annotation").setAttribute("y", loc_logo)
-
-      img_add = 'https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCBarcelona' + num.value + '.png'
-      document.getElementById("fcbimage").setAttribute("src", img_add)  
     });
 }
 
