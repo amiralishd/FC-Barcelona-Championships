@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html>
+<script src="https://d3js.org/d3.v4.js">  
+</script>
+    
+<style>
+body {
+    background-color: white;
+    font: 14px sans-serif;
+}
+  
+.chart { fill: #004d98 }
+.chart:hover {fill: #a50044;}
+  
+.axis {
+	font: 12px sans-serif;
+}
+  
+.toolTip {
+    position: absolute;
+    display: none;
+    min-width: 30px;
+    height: auto;
+    background: #edbb00;
+    opacity: 0.94;
+    border: .5px solid #004d98;
+    padding: 4px;
+    text-align: center;
+    font: 12px sans-serif;
+}
+  
+#whatyear {
+  background-color: #edbb00;
+    border-style: solid;
+    border-width: 5px;
+  color: #fff;
+  font: 18px sans-serif;
+  text-decoration: none;
+  border: none;
+}
+  
+#annotation {
+  background-color: #edbb00;
+    border-style: solid;
+    border-width: 5px;
+  color: #fff;
+  font: 13px sans-serif;
+  text-decoration: none;
+  border: none;
+}
+  
+#button {
+  background-color: #edbb00;
+  padding: .7em;
+  border-radius: 20px;
+  color: black;
+  font: 13px sans-serif;
+  text-decoration: none;
+  border: none;
+}
+  
+#button:hover {
+  color: white;
+  border: none;
+  background: #A50044;
+}
+  
+#barChart{
+    pointer-events: all;        
+}
+  
+#scrollbar{
+    float: right
+}
+  
+#fcbimage{
+    display: none
+}
+  
+#desc{
+    margin-left: 40px;
+    margin-top: 20px;  
+}
+  
+</style>
 
+  
+  
+<h1> Glorious Years of F.C. Barcelona </h1>
+<body>
+    
+<div id="pageselect">
+    <button id="button" onclick="hideChart()"> About this visualization </button>
+    <button id="button" value=1952 onclick="showChart(this)"> 1 </button>
+    <button id="button" value=1992 onclick="showChart(this)"> 2 </button>
+    <button id="button" value=1997 onclick="showChart(this)"> 3 </button>
+    <button id="button" value=2009 onclick="showChart(this)"> 4 </button>
+    <button id="button" value=2011 onclick="showChart(this)"> 5 </button>
+    <button id="button" value=2015 onclick="showChart(this)"> 6 </button>
+    <button id="button" value=2018 onclick="showChart(this)"> 7 </button>
+</div>
+    
+<p><span id="aboutThisViz"></span></p>
+  
+<svg width="1420" height="350" id="barChart">
+    <rect width="100" height="43" x=50.15% y=9% fill=#edbb00 rx="15" ry="15"></rect>
+    <text id="whatyear" x=53.95% y=15% font-family="sans-serif" font-size="18px" fill=black text-anchor="middle" alignment-baseline="central"></text>
+    <image id="annotation" xlink:href="https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCB_logo.png" x=50% y=50% height="40px" width="40px">
+    </image>
+</svg>
+  
+<div id="desc">
+    <img id="fcbimage" src="" alt="FCB" style="float:left;width:300px;height:auto;">  
+    <p><span id="description"></span></p>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+<script>  
+
+// document.getElementById("barChart").addEventListener("mouseclick", showChart, false);
+document.getElementById("barChart").style.display = "none";
+document.getElementById("description").style.display = "none";
+document.getElementById("aboutThisViz").style.display = "block";
+document.getElementById("aboutThisViz").innerHTML = 1;
+    
+function hideChart() {
+    document.getElementById("barChart").style.display = "none";
+    document.getElementById("description").style.display = "none";
+    document.getElementById("aboutThisViz").style.display = "block";
+    document.getElementById("fcbimage").style.display = "none";
+}
+
+function showChart(num) {
+    document.getElementById("barChart").style.display = "block";
+    document.getElementById("description").style.display = "block";
+    document.getElementById("aboutThisViz").style.display = "none";
+    document.getElementById("fcbimage").style.display = "block";
+    document.getElementById("description").innerHTML = num.value;
+    document.getElementById("description").value = num.value;
+    tmp = num.value + "<br>"
+    tmp = num.value-1 + "-" + tmp.substring(2)
+    document.getElementById("whatyear").innerHTML = tmp;
+
+    csv_add = "https://github.com/amiralishd/FC-Barcelona-Championships/raw/master/data/FCBarcelona_championship_records.csv"
+    d3.csv(csv_add, function(d) {
+        d.Catalan_Cup = +d["Catalan Cup"];
+        d.Catalan_League = +d["Catalan League"];
+        d.Catalan_League_Championship = +d["Catalan League Championship"];
+        d.Catalan_Super_Cup = +d["Catalan Super Cup"];
+        d.Champions_Leauge = +d["Champions Leauge"];
+        d.Copa_del_Rey = +d["Copa del Rey"];
+        d.European_Cup_Winners_Cup = +d["European Cup Winners' Cup"];
+        d.Eva_Duarte_Cup = +d["Eva Duarte Cup"];
+        d.Fairs_Cup = +d["Fairs Cup"];
+        d.Fifa_Club_World_Cup = +d["Fifa Club World Cup"];
+        d.La_Liga = +d["La Liga"];
+        d.Latin_Cup = +d["Latin Cup"];
+        d.Mediterranian_League = +d["Mediterranian League"];
+        d.Pyrenees_Cup = +d["Pyrenees Cup"];
+        d.Spanish_League_Cup = +d["Spanish League Cup"];
+        d.Spanish_Super_Cup = +d["Spanish Super Cup"];
+        d.Total = +d["Total"];
+        d.UEFA_Super_Cup = +d["UEFA Super Cup"];
+        d.Year = +d["Year"];
+        return d;
+    }, function(error, data) {
+        if (error) throw error;
+    
+        var svg = d3.select("svg"),
+        margin = {top: 60, right: 40, bottom: 40, left: 40},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom;
+
+        var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+
+        var x = d3.scaleLinear().domain([1900,2020]).rangeRound([0, width]),
+        y = d3.scaleLinear().domain([0,6]).rangeRound([height, 0]);
+
+        var g = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + (height + 0) + ")")
+            .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
+      
+        g.append("text")             
+            .attr("transform", "translate(" + (0.99*width) + " ," + (height + margin.top + 15) + ")")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "14px")
+            .style("text-anchor", "middle")
+            .text("Year");
+
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(6));
+        g.append("text")
+      
+            .attr("transform", "rotate(-90)")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "14px")
+            .attr("y", 1 - margin.left)
+            .attr("x", 0 - 0.2 * height)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("# of Trophies");  
+        
+        g.selectAll(".chart")
+            .data(data.slice(0,num.value-1899))
+            .enter().append("rect")
+            .attr("class", "chart")
+            .on("mousemove", function(d){
+                tooltip.style("left", d3.event.pageX + 10 + "px")
+                .style("top", d3.event.pageY + 10 + "px")
+                .html(tooltipcontent(d))
+                .style("fill", "#a50044")
+                .style("display", "block")
+                })
+                .on("mouseout", function(d){ tooltip.style("display", "none")
+                ;})
+            .attr("x", function(d) { return x(d.Year); })
+            .attr("y", function(d) { return y(0); })
+            .transition().duration(1000)
+            .attr("y", function(d) { return y(d.Total); })
+            .attr("height", function(d) { return height - y(d.Total); })
+            .attr("width", 9) //x.bandwidth()
+        
+      if (num.value <= 1997){loc_logo = 100}
+          else if (num.value <= 2011){loc_logo = 60}
+          else if (num.value <= 2015){loc_logo = 18}
+          else {loc_logo = 184};
+      document.getElementById("annotation").setAttribute("x", x(num.value)+25)
+      document.getElementById("annotation").setAttribute("y", loc_logo)
+
+      img_add = 'https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCBarcelona' + num.value + '.png'
+      document.getElementById("fcbimage").setAttribute("src", img_add)  
+    });
+}
+
+function tooltipcontent(d) {
+    tmp = d.Year + "<br>"
+    tmp = d.Year-1 + "-" + tmp.substring(2)
+    if (d.Champions_Leauge > 0) {tmp += "<br> " + "Champions Leauge";}
+    if (d.Fifa_Club_World_Cup > 0) {tmp += "<br> " + "Fifa Club World Cup";}
+    if (d.European_Cup_Winners_Cup > 0) {tmp += "<br> " + "European Cup Winners' Cup";}
+    if (d.Fairs_Cup > 0) {tmp += "<br> " + "Fair Cup";}
+    if (d.UEFA_Super_Cup > 0) {tmp += "<br> " + "UEFA Super Cup";}
+    if (d.Latin_Cup > 0) {tmp += "<br> " + "Latin Cup";}
+    if (d.Pyrenees_Cup > 0) {tmp += "<br> " + "Pyrenees Cup";}
+    if (d.La_Liga > 0) {tmp += "<br> " + "La Liga";}
+    if (d.Copa_del_Rey > 0) {tmp += "<br> " + "Copa del Rey";}
+    if (d.Spanish_Super_Cup > 0) {tmp += "<br> " + "Spanish Super Cup";}
+    if (d.Spanish_League_Cup > 0) {tmp += "<br> " + "Spanish League Cup";}
+    if (d.Mediterranian_League > 0) {tmp += "<br> " + "Mediterranian League";}
+    if (d.Catalan_League > 0) {tmp += "<br> " + "Catalan League";}
+    if (d.Catalan_League_Championship > 0) {tmp += "<br> " + "Catalan League Championship";}
+    if (d.Catalan_Super_Cup > 0) {tmp += "<br> " + "Catalan Super Cup";}
+    if (d.Catalan_Cup > 0) {tmp += "<br> " + "Catalan Cup";}
+    if (d.Eva_Duarte_Cup > 0) {tmp += "<br> " + "Eva Duarte Cup";}
+    return tmp
+}
+    
+</script>
+</body>
+</html>
