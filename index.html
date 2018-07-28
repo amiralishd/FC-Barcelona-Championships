@@ -147,7 +147,7 @@ function showChart(num) {
     tmp = num.value-1 + "-" + tmp.substring(2)
     document.getElementById("whatyear").innerHTML = tmp;
 
-    csv_add = "https://github.com/amiralishd/FC-Barcelona-Championships/raw/master/data/FCBarcelona_championship_records.csv"
+    csv_add = "https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/data/FCBarcelona_championship_records.csv"
     d3.csv(csv_add, function(d) {
         d.Catalan_Cup = +d["Catalan Cup"];
         d.Catalan_League = +d["Catalan League"];
