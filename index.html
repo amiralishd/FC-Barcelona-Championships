@@ -213,6 +213,7 @@ function showChart(num) {
         
         g.selectAll(".chart")
             .data(data.slice(0,num.value-1899))
+	    // .exit().remove()      // I have tried many other things and none worked so far!!!
             .enter().append("rect")
             .attr("class", "chart")
             .on("mousemove", function(d){
