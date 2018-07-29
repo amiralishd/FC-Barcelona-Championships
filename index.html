@@ -100,11 +100,11 @@ h1{
 <body>
 <div id="pageselect">
     <button id="button" onclick="hideChart()"> About this visualization </button>
-    <button id="button" value=1953 onclick="showChart(this)"> 1949-1953 </button>
-    <button id="button" value=1993 onclick="showChart(this)"> 1992-1993 </button>
-    <button id="button" value=2006 onclick="showChart(this)"> 2006 </button>
-    <button id="button" value=2012 onclick="showChart(this)"> 2009-2012 </button>
-    <button id="button" value=2018 onclick="showChart(this)"> 2015-2016 </button>
+    <button id="button" value=1953 onclick="showChart(this)"> 1948-1953 </button>
+    <button id="button" value=1993 onclick="showChart(this)"> 1991-1993 </button>
+    <button id="button" value=2006 onclick="showChart(this)"> 2005-2006 </button>
+    <button id="button" value=2012 onclick="showChart(this)"> 2008-2012 </button>
+    <button id="button" value=2018 onclick="showChart(this)"> 2014-2016 </button>
 </div>
     
 <p><span id="aboutThisViz"></span></p>
@@ -147,30 +147,20 @@ function showChart(num) {
     
     
     if (num.value == 1953)
-        {desctext = "&#9672 Season with most titles for Barca<br />&#9672 Started their journey to become the team with most league and Copa del Rey doubles with overall of 6 (1951-52, 1952-53, 1958-59, 1997-98, 2008-09 and 2014-15)<br />&#9672 Biggest home win in la Liga: FC Barcelona 10 - Gimnàstic Tarragona 1 (11/09/1949)";
-         start_year = 1949;
-         end_year = 1953;
-         tmp = "1949-1953";}
+        {desctext = "&#9672 Season with most titles for Barcelona<br />&#9672 Started their journey to become the team with most league and Copa del Rey doubles with overall of 6 (1951-52, 1952-53, 1958-59, 1997-98, 2008-09 and 2014-15)<br />&#9672 Biggest home win in la Liga: FC Barcelona 10 - Gimnàstic Tarragona 1 (11/09/1949)";
+         tmp = "1948 - 1953";}
     else if (num.value == 1993)
-        {desctext = "&#9672 From 1991 to 1994 they had their most consecutive Ligas record<br />&#9672 Longest run of games unbeaten in European <br />&#9672 Biggest win in friendly: Smilde (Holland) 1 - FC Barcelona 20 (6-8-1992)<br />&#9672 Started their journey to become the team with most European Cup-League doubles with overall of 5 (1992, 2006, 2009, 2011 and 2015)";
-         start_year = 1992;
-         end_year = 1993;
-         tmp = "1992-1993";}
+        {desctext = "&#9672 Won their first champions leauge in 1992<br />&#9672 Most consecutive Ligas record from 1991 to 1994<br />&#9672 Longest run of games unbeaten in European <br />&#9672 Biggest win in friendly: Smilde (Holland) 1 - FC Barcelona 20 (6-8-1992)<br />&#9672 Started their journey to become the team with most European Cup-League doubles with overall of 5 (1992, 2006, 2009, 2011 and 2015)";
+         tmp = "1991 - 1993";}
     else if (num.value == 2006)
-        {desctext = "&#9672 Longest run of consecutive wins in games in official competitions with 18 games in season 2005/06 (13 in Liga, 3 in Champions League and 2 in Copa del Rey) between 22/10/2005 and 22/1/2006";
-         start_year = 2006;
-         end_year = 2006;
-         tmp = "2006";}
+        {desctext = "&#9672 Won their second champions leauge in 2006<br />&#9672 Longest run of consecutive wins in games in official competitions with 18 games in season 2005/06 (13 in Liga, 3 in Champions League and 2 in Copa del Rey) between 22/10/2005 and 22/1/2006<br />&#9672 Longest run of games unbeaten in European competitions with 17 games, between seasons 1988/89 and 1992/93 and also between seasons 2005/06 and 2006/07";
+         tmp = "2005 - 2006";}
     else if (num.value == 2012)
-        {desctext = "khubam";
-         start_year = 2009;
-         end_year = 2012;
-         tmp = "2009-2012";}
+        {desctext = "&#9672 Won their third and fourth champions leauge in 2009 and 2011<br />&#9672 Won the treble of Cup, League and Champions League for the first time<br />&#9672 Year with most official titles in 2009 with 6 (Copa del Rey, Liga, Champions League, Spanish Super Cup, European Super Cup and Club World Cup)<br />&#9672 Started their journey to become the team with most Club World Cups with overall of 3 (2009, 2011, 2015)<br />&#9672 Longest scoring run in a season with 34 consecutive games in season 2009-10 (27 in Liga, 5 in Champions League and 2 in Clubs World Cup)<br />&#9672 Longest unbeaten run in la Liga from first game with 21 first games of La Liga 2009/10, with 17 wins and 4 draws<br />&#9672 Most wins in a La Liga season with 31 wins in the 2009/10 season<br />&#9672 Longest scoring run in Champions League with 29 games from November 24, 2009 to March 7, 2012<br />&#9672 Longest winning period in La Liga: 16 games from game 7 to 22 in La Liga 2010/11<br />&#9672 Became the team with most points achieved in the league in a calendar year: 103 points in the years 2010 and 2012<br />&#9672 Liga with most goals scored: 2011/12, with 114 goals in 38 games. (National record: Real Madrid, 121 goals in la Liga 2011/12)";
+         tmp = "2008 - 2012";}
     else if (num.value == 2018)
-        {desctext = "manam";
-         start_year = 2015;
-         end_year = 2016;
-         tmp = "2015-2016";};
+        {desctext = "&#9672 Won their fifth champions leauge in 2015<br />&#9672 Became the first team who won the treble of Cup, League and Champions League twice<br />&#9672 Longest unbeaten run in official matches with 39 in the season 2015-16  (32 wins and seven draws in 23 league games, 8 Copa del Rey, 6 Champions League and 2 Club World Cup)<br />&#9672 Best run of home wins in Champions League with 11 games between 2014-15 and 2015-16<br />&#9672 Team with best goal difference in the league with +89 in the league 2014/15 (together with Real Madrid, 2011/12)<br />&#9672 Became the team with most Club World Cups with 3 (2009, 2011, 2015) ";
+         tmp = "2014 - 2016";};
     
     document.getElementById("description").innerHTML = desctext;
     
@@ -302,7 +292,7 @@ function showChart(num) {
             .attr("transform", "translate(0," + (height + 0) + ")")
             .call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
         g.append("text")             
-            .attr("transform", "translate(" + (0.99*width) + " ," + (height + margin.top + 15) + ")")
+            .attr("transform", "translate(" + (0.999*width) + " ," + (height + margin.top - 25) + ")")
             .attr("font-family", "sans-serif")
             .attr("font-size", "14px")
             .style("text-anchor", "middle")
@@ -316,7 +306,7 @@ function showChart(num) {
             .attr("font-family", "sans-serif")
             .attr("font-size", "14px")
             .attr("y", 1 - margin.left)
-            .attr("x", 0 - 0.2 * height)
+            .attr("x", 0 - 0.14 * height)
             .attr("dy", "1em")
             .style("text-anchor", "middle")
             .text("# of Trophies");  
