@@ -100,20 +100,18 @@ h1{
 <body>
 <div id="pageselect">
     <button id="button" onclick="hideChart()"> About this visualization </button>
-    <button id="button" value=1952 onclick="showChart(this)"> 1951-52 </button>
-    <button id="button" value=1992 onclick="showChart(this)"> 1991-92 </button>
-    <button id="button" value=1997 onclick="showChart(this)"> 1996-97 </button>
-    <button id="button" value=2009 onclick="showChart(this)"> 2008-09 </button>
-    <button id="button" value=2011 onclick="showChart(this)"> 2010-11 </button>
-    <button id="button" value=2015 onclick="showChart(this)"> 2014-15 </button>
-    <button id="button" value=2018 onclick="showChart(this)"> Now </button>
+    <button id="button" value=1953 onclick="showChart(this)"> 1949-1953 </button>
+    <button id="button" value=1993 onclick="showChart(this)"> 1992-1993 </button>
+    <button id="button" value=2006 onclick="showChart(this)"> 2006 </button>
+    <button id="button" value=2012 onclick="showChart(this)"> 2009-2012 </button>
+    <button id="button" value=2018 onclick="showChart(this)"> 2015-2016 </button>
 </div>
     
 <p><span id="aboutThisViz"></span></p>
     
 <svg width="1390" height="350" id="barChart">
     <g></g> 
-    <rect width="107.3" height="43" x=48.15% y=9% fill=#edbb00 rx="15" ry="15"></rect>
+    <rect width="106.8" height="43" x=48.15% y=9% fill=#edbb00 rx="15" ry="15"></rect>
     <text id="whatyear" x=51.95% y=15% font-family="sans-serif" font-size="18px" fill=black text-anchor="middle" alignment-baseline="central"></text>
     <image id="annotation" xlink:href="https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCB_logo.png" x=606 y=-100 height="40px" width="40px">
     </image>
@@ -121,7 +119,7 @@ h1{
     
 <div id="desc">
     <img id="fcbimage" src="" alt="FCB" style="float:left;width:300px;height:auto;">  
-    <p><span id="description"></span></p>
+    <p style="margin-left:23em;margin-right:4em"><span id="description"></span></p>
 </div>
 
     
@@ -146,11 +144,38 @@ function showChart(num) {
     document.getElementById("description").style.display = "block";
     document.getElementById("aboutThisViz").style.display = "none";
     document.getElementById("fcbimage").style.display = "block";
-    document.getElementById("description").innerHTML = num.value;
-    document.getElementById("description").value = num.value;
     
-    tmp = num.value + "<br>"
-    tmp = num.value-1 + "-" + tmp.substring(2)
+    
+    if (num.value == 1953)
+        {desctext = "&#9672 Season with most titles for Barca<br />&#9672 Started their journey to become the team with most league and Copa del Rey doubles with overall of 6 (1951-52, 1952-53, 1958-59, 1997-98, 2008-09 and 2014-15)<br />&#9672 Biggest home win in la Liga: FC Barcelona 10 - Gimnàstic Tarragona 1 (11/09/1949)";
+         start_year = 1949;
+         end_year = 1953;
+         tmp = "1949-1953";}
+    else if (num.value == 1993)
+        {desctext = "&#9672 From 1991 to 1994 they had their most consecutive Ligas record<br />&#9672 Longest run of games unbeaten in European <br />&#9672 Biggest win in friendly: Smilde (Holland) 1 - FC Barcelona 20 (6-8-1992)<br />&#9672 Started their journey to become the team with most European Cup-League doubles with overall of 5 (1992, 2006, 2009, 2011 and 2015)";
+         start_year = 1992;
+         end_year = 1993;
+         tmp = "1992-1993";}
+    else if (num.value == 2006)
+        {desctext = "&#9672 Longest run of consecutive wins in games in official competitions with 18 games in season 2005/06 (13 in Liga, 3 in Champions League and 2 in Copa del Rey) between 22/10/2005 and 22/1/2006";
+         start_year = 2006;
+         end_year = 2006;
+         tmp = "2006";}
+    else if (num.value == 2012)
+        {desctext = "khubam";
+         start_year = 2009;
+         end_year = 2012;
+         tmp = "2009-2012";}
+    else if (num.value == 2018)
+        {desctext = "manam";
+         start_year = 2015;
+         end_year = 2016;
+         tmp = "2015-2016";};
+    
+    document.getElementById("description").innerHTML = desctext;
+    
+    //tmp = num.value + "<br>"
+    //tmp = num.value-1 + "-" + tmp.substring(2)
     document.getElementById("whatyear").innerHTML = tmp;
     // console.log(document.getElementById("whatyear").getAttribute("x"));
     
@@ -195,6 +220,8 @@ function showChart(num) {
         d.Total = +d["Total"];
         d.UEFA_Super_Cup = +d["UEFA Super Cup"];
         d.Year = +d["Year"];
+        d.Martini_Rossi = +d["Copa Martini-Rossi"]
+        d.is_gloriuous = +d["is glorious"]
         //console.log(d);
         return d;
     }, function(error, data) {
@@ -215,15 +242,28 @@ function showChart(num) {
         
         var rechighlight = d3.select()
         
-        if (num.value <= 1997){loc_logo = 100}
-            else if (num.value <= 2011){loc_logo = 60}
-            else if (num.value <= 2015){loc_logo = 18}
-            else {loc_logo = 184};
+        if (num.value == 1953)
+            {loc_logo_x = x(num.value)+13;
+             loc_logo_y = 60;}
+        else if (num.value == 1993)
+            {loc_logo_x = x(num.value)+25;
+             loc_logo_y = 101;}
+        else if (num.value == 2006)
+            {loc_logo_x = x(num.value)+25;
+             loc_logo_y = 143;}
+        else if (num.value == 2012)
+            {loc_logo_x = x(num.value)+25;
+             loc_logo_y = 101;}
+        else if (num.value == 2018)
+            {loc_logo_x = x(num.value-2)+25;
+             loc_logo_y = 101;};
+        
+
         //document.getElementById("annotation").setAttribute("x", x(num.value)+25)
         //document.getElementById("annotation").setAttribute("y", loc_logo)
         var annotation = d3.select("svg").select("image")
-            .transition().duration(1000).attr("x", x(num.value)+25)
-            .attr("y", loc_logo)    
+            .transition().duration(1000).attr("x", loc_logo_x)
+            .attr("y", loc_logo_y)    
             //console.log(x(num.value)+25)
         
         
@@ -308,6 +348,7 @@ function showChart(num) {
             .attr("y", function(d) { return y(0); })
             .transition().duration(1000)
             .attr("y", function(d) { return y(d.Total); })
+            .style("fill", function(d) { if (d.is_gloriuous > 0) {return "#a50044"}; })
             .attr("height", function(d) { return height - y(d.Total); })
             .attr("width", 9) //x.bandwidth()
         
@@ -345,6 +386,7 @@ function tooltipcontent(d) {
     if (d.Catalan_Super_Cup > 0) {tmp += "<br> " + "Catalan Super Cup";}
     if (d.Catalan_Cup > 0) {tmp += "<br> " + "Catalan Cup";}
     if (d.Eva_Duarte_Cup > 0) {tmp += "<br> " + "Eva Duarte Cup";}
+    if (d.Martini_Rossi > 0) {tmp += "<br> " + "Copa Martini_Rossi";}
     return tmp
 }
     
