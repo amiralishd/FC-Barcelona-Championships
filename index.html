@@ -92,14 +92,21 @@ h1{
     color: #a50044;
     ;
 }
+    
+#abtviz{
+    margin-top: -17px;
+    margin-left: 0px;
+    margin-right: 855px;
+    text-align: justify;
+}
 </style>
 
     
     
-<h1 id='header' color = #FFD700> Glorious Years of F.C. Barcelona</h1>
+<h1 id='header' color = #FFD700> Glorious Years of FC Barcelona</h1>
 <body>
 <div id="pageselect">
-    <button id="button" onclick="hideChart()"> About this visualization </button>
+    <button id="button" onclick="hideChart()"> About the visualization </button>
     <button id="button" value=1953 onclick="showChart(this)"> 1948-1953 </button>
     <button id="button" value=1993 onclick="showChart(this)"> 1991-1993 </button>
     <button id="button" value=2006 onclick="showChart(this)"> 2005-2006 </button>
@@ -107,7 +114,30 @@ h1{
     <button id="button" value=2018 onclick="showChart(this)"> 2014-2016 </button>
 </div>
     
-<p><span id="aboutThisViz"></span></p>
+<div id="aboutThisViz">
+    <img src="https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCB_noucamp.png" alt="FCB" style="float:right;width:740px;height:auto;margin-right:45px;margin-top:20px;">
+    
+    <h4 style="margin-top:2em">About this visualization:</h4>
+    <p id="abtviz">In this visualization, an interactive slideshow narrative structure has been leveraged to go over the glorious years of Barcelona football club from 1900 to now. Using the buttons provided at the top left of the page, user can navigate between the scenes and learn more about the championships of this team.</p>
+    
+    <h4 style="margin-top:1.0em">Data:</h4>
+    <p id="abtviz">The dataset used for this visualization was put together based on the information found on the official website of the club at fcbarcelona.com and in the form of a csv file.</p>
+    
+    <h4 style="margin-top:1.0em">Scenes:</h4>
+    <p id="abtviz">There are a total of 5 scenes (plus 1 for the description of the visualization), and in each, user can learn about the trophies the team won and the records they made. The view and formatting remains consistent across the scenes to make it as convenient as possible for the user to focus on the presented information and not get distracted. In each scene, there is bar chart showing the number and names (by hovering the cursor) of the trophies, and below that, user can see a picture of the team along with some of the records that were made by the team during those years (with corresponding bars highlighted in maroon).</p>
+    
+    <h4 style="margin-top:1.0em">Annotations:</h4>
+    <p id="abtviz">Tooltips are enabled in each scene so that user can reveal the names of trophies won in each season. In order for the user to be aware of this feature, the bars will change their color to maroon, and the tooltip will get displayed by simply hovering the mouse on each bar.</p>
+    
+    <h4 style="margin-top:1.0em">Parameters:</h4>
+    <p id="abtviz">The buttons provided at the top left of the page will help the user to navigate through scenes. Clicking on each of these buttons will switch the year parameter, and the bar chart will change accordingly. Changes resulted by switching the year parameter include the number of bars that are displayed, the location of the tiny barcelona logo which brings user's attention to the time interval during which the records brought at the bottom of the page happened, and the picture of the team.</p>
+    
+    <h4 style="margin-top:1.0em">Triggers:</h4>
+    <p id="abtviz">In each scene, user can hover the mouse over the bars to see detailed information as tooltip. This information includes the name of the trophies won and the season.</p>
+    
+    <h4 style="margin-top:1.0em">Tools:</h4>
+    <p id="abtviz">D3 v4 has been used to produce all the visualizations.</p> 
+</div>
     
 <svg width="1390" height="350" id="barChart">
     <g></g> 
@@ -124,19 +154,21 @@ h1{
 
     
     
-<script>  
-// document.getElementById("barChart").addEventListener("mouseclick", showChart, false);
+<script>
     
 document.getElementById("barChart").style.display = "none";
 document.getElementById("description").style.display = "none";
 document.getElementById("aboutThisViz").style.display = "block";
-document.getElementById("aboutThisViz").innerHTML = 1;
     
 function hideChart() {
     document.getElementById("barChart").style.display = "none";
     document.getElementById("description").style.display = "none";
     document.getElementById("aboutThisViz").style.display = "block";
     document.getElementById("fcbimage").style.display = "none";
+    
+    d3.select("svg").select("g").selectAll(".chart").data([]).exit().remove()
+    
+    d3.select("svg").select("image").attr("x", 606).attr("y", -100) 
 }
 
 function showChart(num) {
@@ -163,31 +195,7 @@ function showChart(num) {
          tmp = "2014 - 2016";};
     
     document.getElementById("description").innerHTML = desctext;
-    
-    //tmp = num.value + "<br>"
-    //tmp = num.value-1 + "-" + tmp.substring(2)
     document.getElementById("whatyear").innerHTML = tmp;
-    // console.log(document.getElementById("whatyear").getAttribute("x"));
-    
-
-    
-  //  if (num.value = 1952){
-//        document.getElementById("annotation").innerHTML = "Hey to!";
-  //      document.getElementById("annotation").setAttribute("x", "50%");
-//        document.getElementById("annotation").setAttribute("y", "50%");
-  //      document.getElementById("annotation").style.display = "inline-block";
-//    }
-        //document.getElementById("annotation").style.display = "none";
-    
-    // "https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/data/FCBarcelona_championship_records.csv"
-    
-//    if (num.value == 1952){csv_add = "FCBarcelona_championship_records_1.csv"}
-//    else if (num.value == 1992){csv_add = "FCBarcelona_championship_records_2.csv"}
-//    else if (num.value == 1997){csv_add = "FCBarcelona_championship_records_3.csv"}
-//    else if (num.value == 2009){csv_add = "FCBarcelona_championship_records_4.csv"}
-//    else if (num.value == 2011){csv_add = "FCBarcelona_championship_records_5.csv"}
-//    else if (num.value == 2015){csv_add = "FCBarcelona_championship_records_6.csv"}
-//    else {csv_add = "FCBarcelona_championship_records.csv"}
     
     csv_add = "https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/data/FCBarcelona_championship_records.csv"
     d3.csv(csv_add, function(d) {
@@ -212,7 +220,6 @@ function showChart(num) {
         d.Year = +d["Year"];
         d.Martini_Rossi = +d["Copa Martini-Rossi"]
         d.is_gloriuous = +d["is glorious"]
-        //console.log(d);
         return d;
     }, function(error, data) {
         if (error) throw error;
@@ -248,45 +255,13 @@ function showChart(num) {
             {loc_logo_x = x(num.value-2)+25;
              loc_logo_y = 101;};
         
-
-        //document.getElementById("annotation").setAttribute("x", x(num.value)+25)
-        //document.getElementById("annotation").setAttribute("y", loc_logo)
         var annotation = d3.select("svg").select("image")
             .transition().duration(1000).attr("x", loc_logo_x)
-            .attr("y", loc_logo_y)    
-            //console.log(x(num.value)+25)
+            .attr("y", loc_logo_y)
         
-        
-    //   if (num.value == 1952){img_add = ""}
-    //        else if (num.value == 1992){img_add = "FCBarcelona1952.png"}
-    //        else if (num.value == 1997){img_add = ""}
-    //        else if (num.value == 2009){img_add = ""}
-    //        else if (num.value == 2011){img_add = ""}
-    //        else if (num.value == 2015){img_add = ""}
-    //        else if (num.value == 2018){img_add = ""}
-    //        else {loc_logo = 184};
         img_add = 'https://raw.githubusercontent.com/amiralishd/FC-Barcelona-Championships/master/images/FCBarcelona' + num.value + '.png'
         document.getElementById("fcbimage").setAttribute("src", img_add)
-        //var teampic = d3.select("img")
-        //    .attr("src", img_add)
-        //    .attr("width", 0)
-        //    .transition().duration(1000)
-        //    .attr("width", 300)
         
-        //g.append("text")
-        //    .attr("font-family", "sans-serif")
-        //    .attr("font-size", "14px")
-        //    .attr("y", 5)
-        //    ç
-        //    .text("salam")
-        
-        //g.append("line")
-        //    .attr("y1", 0.5)
-        //    .attr("x1", 0.5)
-        //    .attr("y2", 3)
-        //    .attr("x2", 3)
-        //    .attr("stroke", "red")
-
         g.append("g")
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + (height + 0) + ")")
@@ -313,7 +288,6 @@ function showChart(num) {
         
         g.selectAll(".chart")
             .data(data.slice(0,num.value-1899))
-            //.exit().remove()
             .enter().append("rect")
             .attr("class", "chart")
             .on("mousemove", function(d){tooltip.style("left", d3.event.pageX + 10 + "px")
@@ -321,19 +295,9 @@ function showChart(num) {
                 .html(tooltipcontent(d))
                 .style("fill", "#a50044")
                 .style("display", "block")
-                //d3.select(this)
-                //.transition()
-                //.duration(100)
                 })
             .on("mouseout", function(d){tooltip.style("display", "none")
-                //d3.select(this)
-                //.transition()
-                //.duration(100)
                 ;})
-            //.on("mouseclick", function(d){annotation.attr("width", 0)
-            //    .transition().duration(1000)
-            //    .attr("width", 40)
-            //    ;})
             .attr("x", function(d) { return x(d.Year); })
             .attr("y", function(d) { return y(0); })
             .transition().duration(1000)
@@ -341,11 +305,6 @@ function showChart(num) {
             .style("fill", function(d) { if (d.is_gloriuous > 0) {return "#a50044"}; })
             .attr("height", function(d) { return height - y(d.Total); })
             .attr("width", 9) //x.bandwidth()
-        
-        //console.log(d3.min(data, function(d) {return d.Year}))
-        //console.log(d3.max(data, function(d) {return d.Year}))
-        
-        //
         
         g.selectAll(".chart")
             .data(data.slice(0,num.value-1899))
