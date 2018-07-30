@@ -225,7 +225,7 @@ function showChart(num) {
         if (error) throw error;
     
         var svg = d3.select("svg"),
-            margin = {top: 60, right: 40, bottom: 40, left: 40},
+            margin = {top: 60, right: 100, bottom: 40, left: 40},
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom;
 
